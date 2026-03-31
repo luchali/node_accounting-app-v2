@@ -51,7 +51,7 @@ function createServer() {
     const index = users.findIndex((u) => u.id === Number(req.params.id));
 
     if (index === -1) {
-      return res.sendStatus(404);
+      return res.status(404).send('User not found');
     }
 
     users.splice(index, 1);
@@ -62,7 +62,7 @@ function createServer() {
     const user = users.find((u) => u.id === Number(req.params.id));
 
     if (!user) {
-      return res.sendStatus(404);
+      return res.status(404).send('User not found');
     }
 
     Object.assign(user, req.body);
@@ -103,13 +103,17 @@ function createServer() {
     const { userId, spentAt, title, amount, category, note } = req.body;
 
     if (!title || !userId || !spentAt || !amount || !category) {
-      return res.sendStatus(400);
+      return res
+        .status(400)
+        .send(
+          'Missing required fields: userId, spentAt, title, amount, category',
+        );
     }
 
     const userExists = users.find((u) => u.id === Number(userId));
 
     if (!userExists) {
-      return res.sendStatus(400);
+      return res.status(400).send('User not found');
     }
 
     const newExpenses = {
@@ -130,7 +134,7 @@ function createServer() {
     const expense = expenses.find((e) => e.id === Number(req.params.id));
 
     if (!expense) {
-      return res.sendStatus(404);
+      return res.status(404).send('Expense not found');
     }
 
     res.json(expense);
@@ -140,7 +144,7 @@ function createServer() {
     const index = expenses.findIndex((e) => e.id === Number(req.params.id));
 
     if (index === -1) {
-      return res.sendStatus(404);
+      return res.status(404).send('Expense not found');
     }
 
     expenses.splice(index, 1);
@@ -151,7 +155,7 @@ function createServer() {
     const expense = expenses.find((e) => e.id === Number(req.params.id));
 
     if (!expense) {
-      return res.sendStatus(404);
+      return res.status(404).send('Expense not found');
     }
 
     Object.assign(expense, req.body);
