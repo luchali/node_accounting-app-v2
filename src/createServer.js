@@ -25,7 +25,7 @@ function createServer() {
     const { name } = req.body;
 
     if (!name) {
-      return res.sendStatus(400);
+      return res.status(400).send('A more descriptive message');
     }
 
     const newUser = {
@@ -41,7 +41,7 @@ function createServer() {
     const user = users.find((u) => u.id === Number(req.params.id));
 
     if (!user) {
-      return res.sendStatus(404);
+      return res.status(404).send('User not found');
     }
 
     res.json(user);
